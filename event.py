@@ -19,10 +19,10 @@ SUMMARY:%s
 
     Alarm = """BEGIN:VALARM
 TRIGGER:-PT24H
-REPEAT:1
+REPEAT:%s
 DURATION:PT15M
 ACTION:DISPLAY
-DESCRIPTION:The expiration date has passed
+DESCRIPTION:%s
 END:VALARM
 """
 
@@ -43,7 +43,10 @@ END:VALARM
             d = str(self._params[key]) + "\n"
             uid += f"{key.upper()}:{d}"
 
-        uid = uid + Event.Alarm if self._alarm else uid
+        if (self._alarm):
+            uid += (Event.Alarm % (self._params.get("alarm_repetition", '1'), 
+                                   self._params.get("alarm_text", "Defaulf description")))
+
         return Event.Begin % uid
 
 

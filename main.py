@@ -10,7 +10,9 @@ if __name__ == "__main__":
         alarm = True,
 
         # Parametrs:
-        location = "United States"
+        location = "United States",
+        alarm_repetition = 3, 
+        alarm_text = "The expiration date has passed",
     )
 
     event.save("NewEvent")
