@@ -49,18 +49,33 @@ END:VALARM
 
         return Event.Begin % uid
 
+    def get_link(self):
+        link_params = dict(
+            text = self._header,
+            dates = f"{self._start}%2F{self._end}",
+            details = self._params.get("description", None),
+            location = self._params.get("location", None),
+        )
+        link = f"""https://www.google.com/calendar/render?action=TEMPLATE"""
 
-    def save(self, name: str):
-        "Save event as QR code"
-        name = self._header if not name else name
-        
-        img = qrcode.make(self.get_string())
-        img.save(f'{name}.png')
+        for key in link_params:
+            p = link_params[key]
+            if p:
+                p = str(p).replace(' ', '+')
+                link += f"&{key}={p}"
 
+        return link
 
     def add_param(self, key: str, value):
         self._params[key] = value
+
         
+    @staticmethod
+    def save(text: str, name: str = None):
+        "Save text as QR code"
+        
+        img = qrcode.make(text)
+        img.save(f'{name}.png')
 
     @staticmethod
     def date_to_int(d: date):

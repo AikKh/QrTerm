@@ -10,10 +10,12 @@ if __name__ == "__main__":
         alarm = True,
 
         # Parametrs:
+        description = "Description",
         location = "United States",
         alarm_repetition = 3, 
         alarm_text = "The expiration date has passed",
     )
 
-    event.save("NewEvent")
+    event.save(event.get_string(), name = "Event")
+    event.save(event.get_link(), name = "Link")
     
